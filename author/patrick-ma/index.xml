@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Patrick Ma</title>
+    <link>https://mapy1874.github.io/author/patrick-ma/</link>
+      <atom:link href="https://mapy1874.github.io/author/patrick-ma/index.xml" rel="self" type="application/rss+xml" />
+    <description>Patrick Ma</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language>
+    <image>
+      <url>https://mapy1874.github.io/author/patrick-ma/avatar_hue0b8c51ed1cc740538222d49dd93c98e_1058010_270x270_fill_q90_lanczos_center.jpg</url>
+      <title>Patrick Ma</title>
+      <link>https://mapy1874.github.io/author/patrick-ma/</link>
+    </image>
+    
+  </channel>
+</rss>
