@@ -27,10 +27,11 @@
   
     
   
-  <meta name="description" content="Sophomore @ UNC Chapel Hill">
+  <meta name="description" content="Question Give a non-negative random variable $X$, and positive integers $n$, $m$, show that if $n \le m $, $[E(X^{n})]^{\frac{1}{n}} \le [E(X^{m})]^{\frac{1}{m}}$.
+Analysis: Intuitively, the problem may need techniques like Jensen&rsquo;s Inequality as there is expectation and concave ($a^{\frac{1}{m}}$) &amp; convex functions ($a^{m}$).">
 
   
-  <link rel="alternate" hreflang="en-us" href="https://mapy1874.github.io/tags/">
+  <link rel="alternate" hreflang="en-us" href="https://mapy1874.github.io/post/jensens-inequality-1/">
 
   
 
@@ -215,14 +216,12 @@
   
 
   
-  <link rel="alternate" href="/tags/index.xml" type="application/rss+xml" title="Patrick Ma">
-  
 
   <link rel="manifest" href="/index.webmanifest">
   
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="https://mapy1874.github.io/tags/">
+  <link rel="canonical" href="https://mapy1874.github.io/post/jensens-inequality-1/">
 
   
   
@@ -238,18 +237,64 @@
   <meta property="twitter:card" content="summary">
   
   <meta property="og:site_name" content="Patrick Ma">
-  <meta property="og:url" content="https://mapy1874.github.io/tags/">
-  <meta property="og:title" content="Tags | Patrick Ma">
-  <meta property="og:description" content="Sophomore @ UNC Chapel Hill"><meta property="og:image" content="https://mapy1874.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="https://mapy1874.github.io/post/jensens-inequality-1/">
+  <meta property="og:title" content="Thoughts on a Jensen&#39;s Inequality Question | Patrick Ma">
+  <meta property="og:description" content="Question Give a non-negative random variable $X$, and positive integers $n$, $m$, show that if $n \le m $, $[E(X^{n})]^{\frac{1}{n}} \le [E(X^{m})]^{\frac{1}{m}}$.
+Analysis: Intuitively, the problem may need techniques like Jensen&rsquo;s Inequality as there is expectation and concave ($a^{\frac{1}{m}}$) &amp; convex functions ($a^{m}$)."><meta property="og:image" content="https://mapy1874.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="https://mapy1874.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
-    <meta property="og:updated_time" content="2020-05-24T15:42:15-04:00">
+    
+      <meta property="article:published_time" content="2020-05-24T15:42:15-04:00">
+    
+    <meta property="article:modified_time" content="2020-05-24T15:42:15-04:00">
   
 
   
 
 
+    
 
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://mapy1874.github.io/post/jensens-inequality-1/"
+  },
+  "headline": "Thoughts on a Jensen's Inequality Question",
+  
+  "datePublished": "2020-05-24T15:42:15-04:00",
+  "dateModified": "2020-05-24T15:42:15-04:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Patrick Ma"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Patrick Ma",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://mapy1874.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "Question Give a non-negative random variable $X$, and positive integers $n$, $m$, show that if $n \\le m $, $[E(X^{n})]^{\\frac{1}{n}} \\le [E(X^{m})]^{\\frac{1}{m}}$.\nAnalysis: Intuitively, the problem may need techniques like Jensen\u0026rsquo;s Inequality as there is expectation and concave ($a^{\\frac{1}{m}}$) \u0026amp; convex functions ($a^{m}$)."
+}
+</script>
+
+  
 
   
 
@@ -257,10 +302,13 @@
   
 
 
+  
 
 
 
-  <title>Tags | Patrick Ma</title>
+
+
+  <title>Thoughts on a Jensen&#39;s Inequality Question | Patrick Ma</title>
 
 </head>
 
@@ -514,65 +562,309 @@
 </nav>
 
 
-  
-
-
-
-
-
-
-
-
-
-
-
+  <article class="article">
 
   
 
+
+
+
+
+
+
+
+
+
+
+
+  
+
   
   
+  
+<div class="article-container pt-3">
+  <h1>Thoughts on a Jensen&#39;s Inequality Question</h1>
+
+  
+
   
     
-  
-<div class="universal-wrapper pt-3">
-  <h1>Tags</h1>
+
+
+<div class="article-metadata">
 
   
+  
+  
+  
+  <div>
+    
+
+  
+  <span>Patrick Ma</span>
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    May 24, 2020
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    2 min read
+  </span>
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/category/statistics/">Statistics</a></span>
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   
 </div>
 
 
 
-<div class="universal-wrapper">
-  
+  <div class="article-container">
 
-  
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tag/ml/" >ML</a></h2>
-      <div class="article-style">
-        
-      </div>
+    <div class="article-style">
+      <h2 id="question">Question</h2>
+<p>Give a non-negative random variable $X$, and positive integers $n$, $m$, show that if $n \le m $, $[E(X^{n})]^{\frac{1}{n}} \le [E(X^{m})]^{\frac{1}{m}}$.</p>
+<h3 id="analysis">Analysis:</h3>
+<p>Intuitively, the problem may need techniques like Jensen&rsquo;s Inequality as there is expectation and concave ($a^{\frac{1}{m}}$) &amp; convex functions ($a^{m}$). However, it would be hard to use Jensen directly without proper transformation. Recall that Jensen&rsquo;s Ineuqality states:
+$$
+f(EX) \le Ef(X) ~~~~~~~~~ \text{if  $f(.)$ is convex} \<br>
+$$</p>
+<p>$$
+f(EX) \ge Ef(X) ~~~~~~~~~ \text{if  $f(.)$ is concave.}
+$$</p>
+<h4 id="attempt-1">Attempt 1</h4>
+<p>We can try to apply Jensen partially to the LHS to see if it gives us a intermediate expression.</p>
+<p>We know that $f(a)=a^n$ is convex on $[0,\infty)$ if $n \ge 1$.  Using Jensen, we have
+$$
+E(X^n) \ge (EX)^n \   [E(X^n)]^{\frac{1}{n}} \ge [(EX)^n]^{\frac{1}{n}}=EX
+$$
+This is not we want as Jensen finds a lower bound for the LHS and proving $EX \le [E(X^{m})]^{\frac{1}{m}}$ does not lead to our goal.</p>
+<h4 id="attempt-2">Attempt 2</h4>
+<p>What about applying to the concave function  ($a^{\frac{1}{m}}$) ?</p>
+<p>We know that $f(a)=a^{\frac{1}{n}}$ is concave on $[0,\infty)$ if $n \ge 1$.  Using Jensen, we have
+$$
+[E(X^n)]^{\frac{1}{n}} \ge E(X)^{n\frac{1}{n}}=EX
+$$
+Same lower bound. Not helpful, either!</p>
+<h4 id="attempt-3">Attempt 3</h4>
+<p>The failure in finding a good intermediate form motivates me to look back and  exam the correctness of the proposition in a basic case.</p>
+<p>Recall that variance of a randome variable is always non-negative:
+$$
+Var(X) = E(X-EX)^2		=EX^2-2E(XEX)+(EX)^2
+$$</p>
+<p>$$
+= EX^2-(EX)^2		\ge 0.
+$$</p>
+<p>We have:
+$$
+(EX)^2 \le EX^2 \Leftrightarrow EX \le (EX^2)^{\frac{1}{2}} \Leftrightarrow (EX^1)^{\frac{1}{1}} \le (EX^2)^{\frac{1}{2}},
+$$
+which is true for non-negative random variable.</p>
+<p>In this case, $n=1, ~ m = 2$. Can we try to reverse the general case into a well-formatted form like $(EX)^2 \le EX^2$?
+$$
+(EX^n)^{\frac{1}{n}} \le (EX^m)^{\frac{1}{m}}  \<br>
+\Leftrightarrow (EX^n)^{\frac{m}{n}} \le EX^m \<br>
+\Leftrightarrow (EX^n)^{\frac{m}{n}} \le EX^{n\frac{m}{n}}
+$$
+Boom! The reversed roadmap for transforming basic case into our goal worked! Here we have a random variable $Y=X^n$, convex function $g(a)=a^{\frac{m}{n}}$ as $\frac{m}{n} \ge 1$. The final form can be treated as $g(EY) \le E[g(Y)]$, which is true by Jensen&rsquo;s Inequality! We can finally prove the proposition!</p>
+<h3 id="proof">Proof</h3>
+<p>Let $Y=X^n, g(a) = a^{\frac{m}{n}}$.</p>
+<p>Since
+$$
+g&rsquo;'(a) = \frac{m}{n}.(\frac{m}{n}-1).a^{\frac{m}{n}-2} \ge 0 ~~\forall a \in [0, \infty),
+$$
+$g(a)$ is convex on $[0,\infty)$.</p>
+<p>By Jensen&rsquo;s Inequality:
+$$
+(EX^n)^{\frac{m}{n}} = (EY)^{\frac{m}{n}} \le E(Y^{\frac{m}{n}}) =  E([X^n]^{\frac{m}{n}})=EX^m
+$$</p>
+<p>$$
+\Leftrightarrow [E(X^{n})]^{\frac{1}{n}} \le [E(X^{m})]^{\frac{1}{m}}. ~~~~~~~~~~~\square
+$$</p>
+<h3 id="conclusion">Conclusion</h3>
+<p>We solved the problem by tracing back to the basic case and used it as a guide for proving the general case. Sometimes mathematical gymnastics helps us a lot.</p>
+
     </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tag/statistics/" >Statistics</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
 
-  
+    
 
+
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tag/ml/">ML</a>
+  
+  <a class="badge badge-light" href="/tag/statistics/">Statistics</a>
+  
 </div>
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https://mapy1874.github.io/post/jensens-inequality-1/&amp;text=Thoughts%20on%20a%20Jensen&amp;#39;s%20Inequality%20Question" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https://mapy1874.github.io/post/jensens-inequality-1/&amp;t=Thoughts%20on%20a%20Jensen&amp;#39;s%20Inequality%20Question" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Thoughts%20on%20a%20Jensen&amp;#39;s%20Inequality%20Question&amp;body=https://mapy1874.github.io/post/jensens-inequality-1/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https://mapy1874.github.io/post/jensens-inequality-1/&amp;title=Thoughts%20on%20a%20Jensen&amp;#39;s%20Inequality%20Question" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://web.whatsapp.com/send?text=Thoughts%20on%20a%20Jensen&amp;#39;s%20Inequality%20Question%20https://mapy1874.github.io/post/jensens-inequality-1/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=https://mapy1874.github.io/post/jensens-inequality-1/&amp;title=Thoughts%20on%20a%20Jensen&amp;#39;s%20Inequality%20Question" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+  </div>
+</article>
 
       
 
