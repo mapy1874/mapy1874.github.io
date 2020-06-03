@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Statistics | Patrick Ma</title>
-    <link>https://mapy1874.github.io/category/statistics/</link>
-      <atom:link href="https://mapy1874.github.io/category/statistics/index.xml" rel="self" type="application/rss+xml" />
-    <description>Statistics</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sun, 24 May 2020 15:42:15 -0400</lastBuildDate>
+    <title>Machine Learning | Patrick Ma</title>
+    <link>https://mapy1874.github.io/tag/machine-learning/</link>
+      <atom:link href="https://mapy1874.github.io/tag/machine-learning/index.xml" rel="self" type="application/rss+xml" />
+    <description>Machine Learning</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sun, 24 May 2020 15:34:09 -0400</lastBuildDate>
     <image>
       <url>https://mapy1874.github.io/images/icon_huc150438b37d3fb5834aec482eaf638f2_3872_512x512_fill_lanczos_center_2.png</url>
-      <title>Statistics</title>
-      <link>https://mapy1874.github.io/category/statistics/</link>
+      <title>Machine Learning</title>
+      <link>https://mapy1874.github.io/tag/machine-learning/</link>
     </image>
     
     <item>
-      <title>Thoughts on a Jensen&#39;s Inequality Question</title>
-      <link>https://mapy1874.github.io/post/jensens-inequality-1/</link>
-      <pubDate>Sun, 24 May 2020 15:42:15 -0400</pubDate>
-      <guid>https://mapy1874.github.io/post/jensens-inequality-1/</guid>
+      <title>An Analysis of a Jensen&#39;s Inequality Problem</title>
+      <link>https://mapy1874.github.io/post/jensen-inequality-question/</link>
+      <pubDate>Sun, 24 May 2020 15:34:09 -0400</pubDate>
+      <guid>https://mapy1874.github.io/post/jensen-inequality-question/</guid>
       <description>&lt;h2 id=&#34;question&#34;&gt;Question&lt;/h2&gt;
 &lt;p&gt;Give a non-negative random variable $X$, and positive integers $n$, $m$, show that if $n \le m $, $[E(X^{n})]^{\frac{1}{n}} \le [E(X^{m})]^{\frac{1}{m}}$.&lt;/p&gt;
 &lt;h3 id=&#34;analysis&#34;&gt;Analysis:&lt;/h3&gt;
@@ -52,7 +52,7 @@ $$&lt;/p&gt;
 $$&lt;/p&gt;
 &lt;p&gt;We have:
 $$
-(EX)^2 \le EX^2 \Leftrightarrow EX \le (EX^2)^{\frac{1}{2}} \Leftrightarrow (EX^1)^{\frac{1}{1}} \le (EX^2)^{\frac{1}{2}},
+(EX)^2 \le EX^2 	\\Leftrightarrow EX \le (EX^2)^{\frac{1}{2}} 	\\Leftrightarrow (EX^1)^{\frac{1}{1}} \le (EX^2)^{\frac{1}{2}},
 $$
 which is true for non-negative random variable.&lt;/p&gt;
 &lt;p&gt;In this case, $n=1, ~ m = 2$. Can we try to reverse the general case into a well-formatted form like $(EX)^2 \le EX^2$?
