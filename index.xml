@@ -5,12 +5,161 @@
     <link>https://mapy1874.github.io/</link>
       <atom:link href="https://mapy1874.github.io/index.xml" rel="self" type="application/rss+xml" />
     <description>Patrick Ma</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sun, 24 May 2020 15:42:15 -0400</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Tue, 09 Jun 2020 17:13:57 -0400</lastBuildDate>
     <image>
       <url>https://mapy1874.github.io/images/icon_huc150438b37d3fb5834aec482eaf638f2_3872_512x512_fill_lanczos_center_2.png</url>
       <title>Patrick Ma</title>
       <link>https://mapy1874.github.io/</link>
     </image>
+    
+    <item>
+      <title>DevOps Notes</title>
+      <link>https://mapy1874.github.io/post/devops-notes/</link>
+      <pubDate>Tue, 09 Jun 2020 17:13:57 -0400</pubDate>
+      <guid>https://mapy1874.github.io/post/devops-notes/</guid>
+      <description>&lt;h2 id=&#34;docker&#34;&gt;Docker&lt;/h2&gt;
+&lt;h3 id=&#34;1-use-docker-images&#34;&gt;1. Use Docker Images&lt;/h3&gt;
+&lt;p&gt;Run a container from a image. Execute this command for multiple times will generate several different containers from the same image.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;docker run &amp;lt;image&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Lists the containers that are &lt;strong&gt;still running&lt;/strong&gt;. Add the &lt;code&gt;-a&lt;/code&gt; switch in order to see containers that &lt;strong&gt;have stopped&lt;/strong&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;docker ps
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Retrieves the logs of a container, even when it has stopped&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;docker logs &amp;lt;id&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;See the most recent 10 seconds of logs for our running container:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;docker logs --since 10s &amp;lt;id&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Gets detailed information about a running or stopped container&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;docker inspect &amp;lt;id&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Stop a container that is still running&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;docker stop &amp;lt;id&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Deletes a container&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;docekr rm &amp;lt;id&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Deletes all stopped container&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;docker container prune -f
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Let my machine to listen for incoming connections on port 8085 and route them to port 80 inside a container that runs NGINX.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;-d&lt;/code&gt; is meant to disconnect while allowing the long-lived container to continue running in the background. Running a container as detached means that you immediately get your command-line back and the standard output from the container is not redirected to your command-line anymore.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;docker run -d -p 8085:80 nginx
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Use volumes&lt;/p&gt;
+&lt;p&gt;When the container dies (the host machine restarts, the container is moved from one node to another in a cluster, it simply fails, etc.) all of that data is lost. Using a volume, you map a directory inside the container to a persistent storage.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-dockerfile&#34;&gt;docker run -v /your/dir:/var/lib/mysql -d mysql:5.7
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;List the local images:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;docker image ls
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;2-create-docker-image&#34;&gt;2. Create Docker Image&lt;/h3&gt;
+&lt;p&gt;Two basic components: A Docker image is created using the &lt;em&gt;docker build&lt;/em&gt; command and a &lt;em&gt;Dockerfile&lt;/em&gt; file.&lt;/p&gt;
+&lt;h4 id=&#34;dockerfile-instructions&#34;&gt;Dockerfile Instructions&lt;/h4&gt;
+&lt;p&gt;FROM: A &lt;em&gt;Dockerfile&lt;/em&gt; file always begins with a &lt;em&gt;FROM&lt;/em&gt; instruction because every image is based on another base image.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-dockerfile&#34;&gt;FROM node:11-alpine
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Don’t use latest! First of all, it doesn’t mean that any running container will be based on the latest available version of the &lt;em&gt;nginx&lt;/em&gt; image. Docker is about having reproducible images, so the &lt;em&gt;latest&lt;/em&gt; version is evaluated when you build your image, not when the container is run. This means that the version will not change unless you run the &lt;em&gt;docker build&lt;/em&gt; command again.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;COPY: Useful when I want files to be part of an image I create. Its first parameter is the file to be copied from the build context and its second parameter is the destination directory inside the image.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-dockerfile&#34;&gt;COPY index.html /usr/share/nginx/html
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;CMD: The &lt;em&gt;CMD&lt;/em&gt; instruction specifies which executable is run when a container is created using your image and provides optional arguments.&lt;/p&gt;
+&lt;p&gt;Both the program to run and its arguments are provided as a JSON array of strings.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-dockerfile&#34;&gt;CMD [&amp;quot;echo&amp;quot;, &amp;quot;Hello world&amp;quot;]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;ENV: Define a default value for an environment variable, in case it isn’t provided when a container is created; this may be done in the &lt;em&gt;Dockerfile&lt;/em&gt; file, using the &lt;em&gt;ENV&lt;/em&gt; instruction.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-dockerfile&#34;&gt;ENV radius=20
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The environment variables can be access in shell by $radius, in Node.JS by process.env.name&lt;/p&gt;
+&lt;p&gt;VOLUME: store your data in a persistent file system.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-dockerfile&#34;&gt;VOLUME /path/to/directory
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The &lt;em&gt;/path/to/directory&lt;/em&gt; is a path to a directory used inside the image. When a container is created using the &lt;em&gt;docker run&lt;/em&gt; command, the &lt;em&gt;-v&lt;/em&gt; switch can be used to map this directory to an actual volume on the host system.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Caveat: It’s best not to think about containers as long-lived, even when they are. Don’t store information inside the containers. In other words, ensure your containers are stateless, not stateful. A stateless container never stores its state when it is run while stateful containers store some information about their state each time they are run. We’ll see later on how and where to store your container’s state. Docker containers are very stable, but the reason for having stateless containers is that this allows for easy scaling up and recovery. More about that later.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;EXPOSE: Purely for documentation purposes. It enables someone who wants to run a container from your image to know which ports they should redirect to the outside world using the &lt;em&gt;-p&lt;/em&gt; switch of the &lt;em&gt;docker run&lt;/em&gt; command.&lt;/p&gt;
+&lt;p&gt;Listen to TCP port 80:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-dockerfile&#34;&gt;EXPOSE 80
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;build-command&#34;&gt;Build command&lt;/h4&gt;
+&lt;p&gt;Build the dockerfile in current directory and name the image as &lt;code&gt;&amp;lt;name&amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;docker build -t &amp;lt;name&amp;gt; .
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Run a container from the image created (i.e. &lt;code&gt;hello&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;--rm&lt;/code&gt; let docker trash the created container after execution.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;docker run --rm hello
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;-it&lt;/code&gt; allows the user to stop the container using Ctrl-C from the command-line&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;docker run --rm -it -p 8082:80 webserver
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;3-publish-docker-images&#34;&gt;3. Publish Docker Images&lt;/h3&gt;
+&lt;p&gt;A three-step process:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Build your image (&lt;em&gt;docker build&lt;/em&gt;) with the appropriate prefix name or tag (&lt;em&gt;docker tag&lt;/em&gt;) an existing one appropriately.&lt;/p&gt;
+&lt;p&gt;For a image in the current directory that is not built yet:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;docker build -t &amp;lt;username&amp;gt;/&amp;lt;name&amp;gt;:&amp;lt;tag&amp;gt; .
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For an existing image:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;docker tag &amp;lt;name&amp;gt; &amp;lt;username&amp;gt;/&amp;lt;name&amp;gt;:&amp;lt;tag&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Log into the Registry (&lt;em&gt;docker login&lt;/em&gt;).&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;docker login -u &amp;lt;username&amp;gt; -p &amp;lt;password&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Push the image into the Registry (&lt;em&gt;docker push&lt;/em&gt;).&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;docker push &amp;lt;username&amp;gt;/&amp;lt;name&amp;gt;:&amp;lt;tag&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Private registries: A private registry ensures that only you can access your private images, while a public registry allows you to make your private images public for selective parties.&lt;/p&gt;
+&lt;p&gt;Which list of factors influences the size of an image?&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;The files included in your image&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Avoid &lt;code&gt;COPY&lt;/code&gt; instructions that are too broad like &lt;code&gt;COPY . .&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Use &lt;em&gt;.dockerignore&lt;/em&gt; to exclude files that should be excluded from the build&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The base image size&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;debian:8-slim&lt;/code&gt; is smaller than &lt;code&gt;debian:8&lt;/code&gt;, &lt;code&gt;nginx:1.15-alpine&lt;/code&gt; is smaller than &lt;code&gt;nginx:1.15&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Image layers&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;In a future build, Docker will use the cached part instead of recreating it as long as it is possible.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;When pushing a new version of the image to a Registry, the common part is not pushed.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;When pulling an image from a registry, the common part you already have is not pulled.&lt;/p&gt;
+&lt;p&gt;The following &lt;em&gt;docekrfile&lt;/em&gt; places &lt;code&gt;COPY&lt;/code&gt; instruction at the very end as this is then instruction that will change a lot. If putting &lt;code&gt;COPY&lt;/code&gt; right after &lt;code&gt;FROM&lt;/code&gt;, the &lt;code&gt;RUN&lt;/code&gt; instruction will also need to be pushed or pulled in this case.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;FROM debian:8
+     
+RUN apt-get update &amp;amp;&amp;amp; apt-get upgrade &amp;amp;&amp;amp; apt-get dist-upgrade -y
+RUN apt-get install -y php5
+     
+COPY . .
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Thoughts on a Jensen&#39;s Inequality Question</title>
