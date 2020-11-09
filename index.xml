@@ -167,7 +167,7 @@ COPY . .
       <pubDate>Sun, 24 May 2020 15:42:15 -0400</pubDate>
       <guid>https://mapy1874.github.io/post/jensens-inequality-1/</guid>
       <description>&lt;h2 id=&#34;question&#34;&gt;Question&lt;/h2&gt;
-&lt;p&gt;Give a non-negative random variable $X$, and positive integers $n$, $m$, show that if $n \le m $, $[E(X^{n})]^{\frac{1}{n}} \le [E(X^{m})]^{\frac{1}{m}}$.&lt;/p&gt;
+&lt;p&gt;Given a non-negative random variable $X$, and positive integers $n$, $m$, show that if $n \le m $, $[E(X^{n})]^{\frac{1}{n}} \le [E(X^{m})]^{\frac{1}{m}}$.&lt;/p&gt;
 &lt;h3 id=&#34;analysis&#34;&gt;Analysis:&lt;/h3&gt;
 &lt;p&gt;Intuitively, the problem may need techniques like Jensen&amp;rsquo;s Inequality as there is expectation and concave ($a^{\frac{1}{m}}$) &amp;amp; convex functions ($a^{m}$). However, it would be hard to use Jensen directly without proper transformation. Recall that Jensen&amp;rsquo;s Ineuqality states:
 $$
