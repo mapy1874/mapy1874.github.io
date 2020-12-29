@@ -208,6 +208,44 @@
 
 
 
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-186225981-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+      dataLayer.push(arguments);
+  }
+
+  function trackOutboundLink(url, target) {
+    gtag('event', 'click', {
+         'event_category': 'outbound',
+         'event_label': url,
+         'transport_type': 'beacon',
+         'event_callback': function () {
+           if (target !== '_blank') {
+             document.location = url;
+           }
+         }
+    });
+    console.debug("Outbound link clicked: " + url);
+  }
+
+  function onClickCallback(event) {
+    if ((event.target.tagName !== 'A') || (event.target.host === window.location.host)) {
+      return;
+    }
+    trackOutboundLink(event.target, event.target.getAttribute('target'));  
+  }
+
+  gtag('js', new Date());
+  gtag('config', 'UA-186225981-1', {});
+
+  
+  document.addEventListener('click', onClickCallback, false);
+</script>
+
+
   
 
 
@@ -835,9 +873,11 @@
 
           
             <div class="card-text"><ul>
-<li>Developed a cheap eye tracking solution with logistic regression, CNN, SVM, transfer learning on collected data</li>
-<li>This isn’t a general eye tracking solution as I collected low-resolution data captured by self-developed <a href="https://patrickma.me/eye-collection/">websites</a></li>
-<li>Achieved an average test score of 0.955+ on 1000+ collected data using scikit-learn and Keras</li>
+<li>Developed a low-cost eye tracking solution with logistic regression, CNN, SVM, transfer learning on collected data</li>
+<li>Developed a unique <a href="https://patrickma.me/eye-collection/">website</a> in <strong>face-api.js</strong> to enable users to capture low-resolution eye gaze data within a single press</li>
+<li>Achieved an average test score of 0.955+ on 1000+ collected data using <strong>scikit-learn</strong> and <strong>Keras</strong></li>
+<li>Researched users’ feedback and developed a website for querying and visualizing data to filter out corrupted data</li>
+<li>Perfected the demo website in <strong>Tensorflow.js</strong> to enable users to see the eye tracking results after training</li>
 </ul>
 </div>
           
@@ -1034,8 +1074,9 @@
               
             </div>
             <div class="card-text"><ul>
-<li>Reviewed autograded homework&amp;exams and gave 30+ suggestions on system bugs, wording improvement, etc/</li>
-<li>Held office hours 6 hours/week to answer questions about COMP 550</li>
+<li>Reviewed frontend code, auto-graded exams and gave 30+ suggestions on software bugs, wording improvements, etc</li>
+<li>Designed a schema for recording the student behavior in exams and analyzed the data using pandas, matplotlib</li>
+<li>Held 6 drop-in office hours per week to guide students with problem sets and understanding concepts in Algorithms</li>
 </ul>
 </div>
           </div>
@@ -1218,6 +1259,25 @@
     
 
     
+    
+      <div class="card experience course">
+        <div class="card-body"><h4 class="card-title exp-title text-muted my-0">AWS Certified Solutions Architect – Associate</h4><div class="card-subtitle my-0 article-metadata">Amazon Web Services<span class="middot-divider"></span>
+
+            Dec 2020
+            
+            – Dec 2023
+            
+          </div>
+
+          
+
+          
+            <a class="card-link" href="https://www.youracclaim.com/badges/4eab991e-0293-486a-8342-16540e837bbf?source=linked_in_profile" target="_blank" rel="noopener">
+              See certificate
+            </a>
+          
+        </div>
+      </div>
     
       <div class="card experience course">
         <div class="card-body"><a href="https://smartresearch.web.unc.edu/" target="_blank" rel="noopener"><h4 class="card-title exp-title text-muted my-0">SMART Scholarship</h4></a><div class="card-subtitle my-0 article-metadata">UNC Office of Undergraduate Research<span class="middot-divider"></span>
