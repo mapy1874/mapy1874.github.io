@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Patrick Ma</title>
-    <link>https://mapy1874.github.io/author/patrick-ma/</link>
-      <atom:link href="https://mapy1874.github.io/author/patrick-ma/index.xml" rel="self" type="application/rss+xml" />
-    <description>Patrick Ma</description>
+    <title>Computer Science | Patrick Ma</title>
+    <link>https://mapy1874.github.io/category/computer-science/</link>
+      <atom:link href="https://mapy1874.github.io/category/computer-science/index.xml" rel="self" type="application/rss+xml" />
+    <description>Computer Science</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Tue, 23 Feb 2021 13:20:41 -0300</lastBuildDate>
     <image>
       <url>https://mapy1874.github.io/images/icon_huc150438b37d3fb5834aec482eaf638f2_3872_512x512_fill_lanczos_center_2.png</url>
-      <title>Patrick Ma</title>
-      <link>https://mapy1874.github.io/author/patrick-ma/</link>
+      <title>Computer Science</title>
+      <link>https://mapy1874.github.io/category/computer-science/</link>
     </image>
     
     <item>
@@ -129,75 +129,6 @@ for i in createGenerator():
 &lt;li&gt;DevOps: automating the deployment and maintenance cycle&lt;/li&gt;
 &lt;li&gt;Documentation: writing great documentation about your code so that others won’t bother you&lt;/li&gt;
 &lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Thoughts on a Jensen&#39;s Inequality Question</title>
-      <link>https://mapy1874.github.io/post/jensens-inequality-1/</link>
-      <pubDate>Sun, 24 May 2020 15:42:15 -0400</pubDate>
-      <guid>https://mapy1874.github.io/post/jensens-inequality-1/</guid>
-      <description>&lt;h2 id=&#34;question&#34;&gt;Question&lt;/h2&gt;
-&lt;p&gt;Given a non-negative random variable $X$, and positive integers $n$, $m$, show that if $n \le m $, $[E(X^{n})]^{\frac{1}{n}} \le [E(X^{m})]^{\frac{1}{m}}$.&lt;/p&gt;
-&lt;h3 id=&#34;analysis&#34;&gt;Analysis:&lt;/h3&gt;
-&lt;p&gt;Intuitively, the problem may need techniques like Jensen&amp;rsquo;s Inequality as there is expectation and concave ($a^{\frac{1}{m}}$) &amp;amp; convex functions ($a^{m}$). However, it would be hard to use Jensen directly without proper transformation. Recall that Jensen&amp;rsquo;s Ineuqality states:
-$$
-f(EX) \le Ef(X) ~~~~~~~~~ \text{if  $f(.)$ is convex} \&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;$$
-f(EX) \ge Ef(X) ~~~~~~~~~ \text{if  $f(.)$ is concave.}
-$$&lt;/p&gt;
-&lt;h4 id=&#34;attempt-1&#34;&gt;Attempt 1&lt;/h4&gt;
-&lt;p&gt;We can try to apply Jensen partially to the LHS to see if it gives us a intermediate expression.&lt;/p&gt;
-&lt;p&gt;We know that $f(a)=a^n$ is convex on $[0,\infty)$ if $n \ge 1$.  Using Jensen, we have
-$$
-E(X^n) \ge (EX)^n \   [E(X^n)]^{\frac{1}{n}} \ge [(EX)^n]^{\frac{1}{n}}=EX
-$$
-This is not we want as Jensen finds a lower bound for the LHS and proving $EX \le [E(X^{m})]^{\frac{1}{m}}$ does not lead to our goal.&lt;/p&gt;
-&lt;h4 id=&#34;attempt-2&#34;&gt;Attempt 2&lt;/h4&gt;
-&lt;p&gt;What about applying to the concave function  ($a^{\frac{1}{m}}$) ?&lt;/p&gt;
-&lt;p&gt;We know that $f(a)=a^{\frac{1}{n}}$ is concave on $[0,\infty)$ if $n \ge 1$.  Using Jensen, we have
-$$
-[E(X^n)]^{\frac{1}{n}} \ge E(X)^{n\frac{1}{n}}=EX
-$$
-Same lower bound. Not helpful, either!&lt;/p&gt;
-&lt;h4 id=&#34;attempt-3&#34;&gt;Attempt 3&lt;/h4&gt;
-&lt;p&gt;The failure in finding a good intermediate form motivates me to look back and  exam the correctness of the proposition in a basic case.&lt;/p&gt;
-&lt;p&gt;Recall that variance of a randome variable is always non-negative:
-$$
-Var(X) = E(X-EX)^2		=EX^2-2E(XEX)+(EX)^2
-$$&lt;/p&gt;
-&lt;p&gt;$$
-= EX^2-(EX)^2		\ge 0.
-$$&lt;/p&gt;
-&lt;p&gt;We have:
-$$
-(EX)^2 \le EX^2 \Leftrightarrow EX \le (EX^2)^{\frac{1}{2}} \Leftrightarrow (EX^1)^{\frac{1}{1}} \le (EX^2)^{\frac{1}{2}},
-$$
-which is true for non-negative random variable.&lt;/p&gt;
-&lt;p&gt;In this case, $n=1, ~ m = 2$. Can we try to reverse the general case into a well-formatted form like $(EX)^2 \le EX^2$?
-$$
-(EX^n)^{\frac{1}{n}} \le (EX^m)^{\frac{1}{m}}  \&lt;br&gt;
-\Leftrightarrow (EX^n)^{\frac{m}{n}} \le EX^m \&lt;br&gt;
-\Leftrightarrow (EX^n)^{\frac{m}{n}} \le EX^{n\frac{m}{n}}
-$$
-Boom! The reversed roadmap for transforming basic case into our goal worked! Here we have a random variable $Y=X^n$, convex function $g(a)=a^{\frac{m}{n}}$ as $\frac{m}{n} \ge 1$. The final form can be treated as $g(EY) \le E[g(Y)]$, which is true by Jensen&amp;rsquo;s Inequality! We can finally prove the proposition!&lt;/p&gt;
-&lt;h3 id=&#34;proof&#34;&gt;Proof&lt;/h3&gt;
-&lt;p&gt;Let $Y=X^n, g(a) = a^{\frac{m}{n}}$.&lt;/p&gt;
-&lt;p&gt;Since
-$$
-g&#39;&#39;(a) = \frac{m}{n}.(\frac{m}{n}-1).a^{\frac{m}{n}-2} \ge 0 ~~\forall a \in [0, \infty),
-$$
-$g(a)$ is convex on $[0,\infty)$.&lt;/p&gt;
-&lt;p&gt;By Jensen&amp;rsquo;s Inequality:
-$$
-(EX^n)^{\frac{m}{n}} = (EY)^{\frac{m}{n}} \le E(Y^{\frac{m}{n}}) =  E([X^n]^{\frac{m}{n}})=EX^m
-$$&lt;/p&gt;
-&lt;p&gt;$$
-\Leftrightarrow [E(X^{n})]^{\frac{1}{n}} \le [E(X^{m})]^{\frac{1}{m}}. ~~~~~~~~~~~\square
-$$&lt;/p&gt;
-&lt;h3 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h3&gt;
-&lt;p&gt;We solved the problem by tracing back to the basic case and used it as a guide for proving the general case. Sometimes mathematical gymnastics helps us a lot.&lt;/p&gt;
 </description>
     </item>
     

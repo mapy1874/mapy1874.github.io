@@ -27,10 +27,10 @@
   
     
   
-  <meta name="description" content="">
+  <meta name="description" content="What&amp;Why When you see the name lazy evaluation, you might wonder what is its difference from evaluation, which means running the program according to the semantics of your language. Well, lazy evaluation is a great modification to a basic evaluator.">
 
   
-  <link rel="alternate" hreflang="en-us" href="https://mapy1874.github.io/project/">
+  <link rel="alternate" hreflang="en-us" href="https://mapy1874.github.io/post/lazy-evaluation/">
 
   
 
@@ -258,7 +258,7 @@
   
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_huc150438b37d3fb5834aec482eaf638f2_3872_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="https://mapy1874.github.io/project/">
+  <link rel="canonical" href="https://mapy1874.github.io/post/lazy-evaluation/">
 
   
   
@@ -274,18 +274,63 @@
   <meta property="twitter:card" content="summary">
   
   <meta property="og:site_name" content="Patrick Ma">
-  <meta property="og:url" content="https://mapy1874.github.io/project/">
-  <meta property="og:title" content=" | Patrick Ma">
-  <meta property="og:description" content=""><meta property="og:image" content="https://mapy1874.github.io/images/icon_huc150438b37d3fb5834aec482eaf638f2_3872_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="https://mapy1874.github.io/post/lazy-evaluation/">
+  <meta property="og:title" content="Lazy Evaluation | Patrick Ma">
+  <meta property="og:description" content="What&amp;Why When you see the name lazy evaluation, you might wonder what is its difference from evaluation, which means running the program according to the semantics of your language. Well, lazy evaluation is a great modification to a basic evaluator."><meta property="og:image" content="https://mapy1874.github.io/images/icon_huc150438b37d3fb5834aec482eaf638f2_3872_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="https://mapy1874.github.io/images/icon_huc150438b37d3fb5834aec482eaf638f2_3872_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
+      <meta property="article:published_time" content="2021-02-23T13:20:41-03:00">
     
+    <meta property="article:modified_time" content="2020-02-23T13:20:41-03:00">
   
 
   
 
 
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://mapy1874.github.io/post/lazy-evaluation/"
+  },
+  "headline": "Lazy Evaluation",
+  
+  "datePublished": "2021-02-23T13:20:41-03:00",
+  "dateModified": "2020-02-23T13:20:41-03:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Patrick Ma"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Patrick Ma",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://mapy1874.github.io/images/icon_huc150438b37d3fb5834aec482eaf638f2_3872_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "What\u0026amp;Why When you see the name lazy evaluation, you might wonder what is its difference from evaluation, which means running the program according to the semantics of your language. Well, lazy evaluation is a great modification to a basic evaluator."
+}
+</script>
+
+  
 
   
 
@@ -299,7 +344,7 @@
 
 
 
-  <title> | Patrick Ma</title>
+  <title>Lazy Evaluation | Patrick Ma</title>
 
 </head>
 
@@ -574,7 +619,7 @@
   
   
 <div class="article-container pt-3">
-  <h1></h1>
+  <h1>Lazy Evaluation</h1>
 
   
 
@@ -586,11 +631,36 @@
 
   
   
+  
+  
+  <div>
+    
+
+  
+  <span>Patrick Ma</span>
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+          Last updated on
+      
+    
+    Feb 23, 2020
+  </span>
+  
 
   
 
   
-
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    6 min read
+  </span>
   
 
   
@@ -598,6 +668,10 @@
   
 
   
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/category/computer-science/">Computer Science</a></span>
   
 
 </div>
@@ -625,7 +699,119 @@
   <div class="article-container">
 
     <div class="article-style">
-      
+      <h2 id="whatwhy">What&amp;Why</h2>
+<p>When you see the name <em>lazy evaluation</em>, you might wonder what is its difference from evaluation, which means running the program according to the semantics of your language. Well, lazy evaluation is a great modification to a basic evaluator. It follows the principle of laziness: delaying evaluation of procedure arguments until the last possible moment. Consider the following example from 
+<a href="https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-27.html#%25_sec_4.2" target="_blank" rel="noopener">SICP</a></p>
+<pre><code class="language-scheme">(define (try a b)
+  (if (= a 0) 1 b))
+</code></pre>
+<p>Using basic the evaluator in COMP524, <code>(try 0 (/ 1 0))</code> will raise an error as the denominator cannot be 0. However, with lazy evaluation, there would be no error at all! Evaluating the example would return 1, as the argument <code>(/ 1 0)</code> would never be evaluated: the evaluator promises <code>(/ 1 0)</code> to be evaluated until it is actually used. We call languages with lazy evaluation as <em>normal-order</em> languages. Also, we say a procedure is <em>non-strict</em> in an argument if the argument is not evaluated before the body of the procedure.</p>
+<p>Another example of lazy evaluation is short-circuit evaluation</p>
+<pre><code class="language-java">false &amp;&amp; (true || false &amp;&amp; true)
+</code></pre>
+<p>As we have the logical operator <em>and</em> here, any part being evaluated to <code>false</code> will lead to the whole expression being <code>false</code>. Thus, lazy evaluation will only look at <code>false</code> and skip <code>(true || false &amp;&amp; true)</code>.</p>
+<p>From the above example, we can say that sometimes lazy evaluation can help reduce error, and we could save (perhaps loooong) evaluation time of an operand never needed in the body of a procedure. Popular languages like Python also integrate lots of lazy evaluation functionalities. We will see more pros and cons of lazy evaluation at the end of this post.</p>
+<h2 id="two-implementations-of-lazy-evaluation">Two Implementations of Lazy Evaluation</h2>
+<p>There are two implementations of lazy evaluation: <em>call-by-name</em> and <em>call-by-need</em>. Before we dive deeper into that, let&rsquo;s introduce a new concept called <em>thunk</em>. The idea is that, argument evaluation is going to be delayed when applying a procedure. The delayed arguments will be transformed into objects called <em>thunks</em>, which contain necessary information to produce the value of the argument. That being said, a thunk must contain the argument expression and the environment when the procedure is being called. In other words, a thunk is a shell for a delayed expression. The following list can represent a thunk</p>
+<pre><code class="language-scheme">(list 'thunk exp env)
+</code></pre>
+<p>Thunk is an important object in implementing lazy evaluation. The process of forming a thunk is called <em>freezing</em>, or <em>delay</em>. The process of evaluating a thunk is called <em>thawing</em>, or <em>forcing</em>. When we want to evaluate thunks, we can memoize the value of the argument, or evaluate the same thunk again in the future. This leads two different implementations of lazy evaluation, defined 
+<a href="https://academic.udayton.edu/saverioperugini/courses/cps343/lecture_notes/lazyevaluation.html" target="_blank" rel="noopener">here</a> as follows:</p>
+<ul>
+<li><em>call-by-name</em>: invokes thunk every time parameter is referenced; disadvantage: it is a waste of time when side-effects are not possible because the same value is returned each time</li>
+<li><em>call-by-need</em>: records the value of each thunk the first time it is called, and thereafter refers to the saved value rather than re-invoking the thunk; this is an example of a more general technique called <em>memoization</em>, which is also used in <em>dynamic programming</em> (take COMP 550)</li>
+</ul>
+<p>In other words, call-by-name is non-memoized lazy evaluation, while call-by-need is memoized lazy evaluation.</p>
+<h2 id="useful-scenarios">Useful scenarios</h2>
+<h4 id="stream-object">Stream Object</h4>
+<p>With call-by-need, we could implement a stream abstraction. A stream object is a pair-like object, except the cdr part is not evaluated until needed. Thus, the data structure may be infinite!</p>
+<center>
+  <img src="stream_object.png">
+  <figcaption>A stream object (from <a href="https://www.youtube.com/watch?v=vAxgBQ0sA00&list=PL7BcsI5ueSNFPCEisbaoQ0kXIDX9rR5FF&index=19&ab_channel=LeonByford">here</a>)</figcaption>
+</center>
+<p>Suppose we want to find the first 100 prime numbers between 1 to 100000000, without stream object, the procedure will look like</p>
+<pre><code class="language-scheme">(list-ref 
+ 	(filter (lambda (x) (prime? x))
+          (enumerate-interval 1 100000000))
+ 	100)
+</code></pre>
+<p>This can be costly as we need to generate the entire list of integers from 1 to 100000000 before proceeding. Stream object can save us from generating a huge list. First, we define two helper procedures in generating stream objects as a list and selecting elements we want in the stream.</p>
+<pre><code class="language-scheme">;; generate a stream list, which is lazy
+(define (stream-interval a b)
+  (if (&gt; a b)
+      the-empty-stream
+      (cons-stream a (stream-interval (+ a 1) b))))
+
+;; filter out elements satify the predicate in stream
+(define (stream-filter predicate str)
+  (if (predicate (stream-car str))	
+      ;; 1st elt of stream satisfies predicate. e.g., elt is a prime num
+      (cons-stream (stream-car str)
+                   (stream-filter predicate 
+                                  (stream-cdr str)))
+      (stream-filter predicate (stream-cdr str))))
+
+;; stream-car, stream-cdr, cons-stream are procedures 
+;; implementing lazy evaluation for the stream object
+</code></pre>
+<p>Then we have the improved version of <code>list-ref</code></p>
+<pre><code class="language-scheme">(stream-ref 
+ 	(stream-filter (lambda (x) (prime? x))
+                 (stream-interval 1 100000000))
+ 	100)
+</code></pre>
+<p><code>stream-interval</code> promises to generate the numbers between 1 to 10000000, but once the first value is generated, it is immediately passed to <code>stream-filter</code>.  Then <code>stream-filter</code> will ask for the next element in the stream. The program will now go back to <code>stream-interval</code> for the second number, etc. As a consequence, we just need to find the first 100 prime numbers and exit the procedure using <code>stream-ref</code> now!</p>
+<h4 id="yield-in-python"><code>yield</code> in Python</h4>
+<p>Here is another similar example in Python.</p>
+<p>We are used to writing code like <code>createIterable</code>. This can be troublesome when the list size is so large that the performance of programs may be compromised.  The keyword <code>yield</code> can solve this by following the principle of laziness. <code>createGenerator</code> will not return an actual element until it is forced to &ldquo;yield&rdquo; one. In other words, <strong>when you call the function, the code you have written in the function body does not run.</strong> Thus, <code>createGenerator</code> processes <code>i=0</code>, and takes a break until the next element in the generator is asked. Because of its laziness, what  <code>yield</code>  returns can only be used once, while an iterable list can be iterated multiple times.</p>
+<pre><code class="language-Python"># return a list as a whole
+def createIterable():
+	mylist = []
+	for i in range(3):
+		mylist.append(i*i)
+	return mylist
+
+for i in createIterable():
+	print(i)	# print 0, 1, 4
+  
+# yield elements one by one
+def createGenerator():
+	mylist = range(3)
+	for i in mylist:
+		yield i*i
+
+for i in createGenerator():
+	print(i)	# print 0, 1, 4
+</code></pre>
+<h2 id="more-about-lazy-evaluation">More about Lazy Evaluation</h2>
+<p>Pros (based on Dr. Perugini&rsquo;s 
+<a href="https://academic.udayton.edu/saverioperugini/courses/cps343/lecture_notes/lazyevaluation.html" target="_blank" rel="noopener">PL course</a>)</p>
+<ul>
+<li>saves the work required to evaluate an unused argument and sometimes prevent an error</li>
+<li>leads to a uniform language; no need for special syntactic forms (e.g., <code>if</code>)</li>
+<li>language can be extended by programmers in standard ways</li>
+</ul>
+<p>Cons (based on Dr. Perugini&rsquo;s 
+<a href="https://academic.udayton.edu/saverioperugini/courses/cps343/lecture_notes/lazyevaluation.html" target="_blank" rel="noopener">PL course</a>)</p>
+<ul>
+<li>call-by-name can be inefficient if an argument is used more than once in the body (so use call-by-need version then)</li>
+<li>call-by-need makes a program difficult to understand in the presence of side-effects</li>
+</ul>
+<p>Other applications of lazy evaluation (based on Dr. Perugini&rsquo;s 
+<a href="https://academic.udayton.edu/saverioperugini/courses/cps343/lecture_notes/lazyevaluation.html" target="_blank" rel="noopener">PL course</a>)</p>
+<ul>
+<li><em>same-fringe</em> problem</li>
+<li>combinatorial search (e.g., a tree) in AI</li>
+<li>lends itself to straightforward implementation of important recursive algorithms (e.g. quicksort)</li>
+<li>overall, streams and filters are used in concert in a <em>genertor-filter</em> style of programming</li>
+</ul>
+<p>Other Laziness in Computer Science</p>
+<ul>
+<li>Caching: keeping copies of data around</li>
+<li>DevOps: automating the deployment and maintenance cycle</li>
+<li>Documentation: writing great documentation about your code so that others won’t bother you</li>
+</ul>
+
     </div>
 
     
@@ -633,6 +819,12 @@
 
 
 
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tag/programming/">Programming</a>
+  
+</div>
 
 
 
@@ -647,7 +839,7 @@
       
       
       <li>
-        <a href="https://twitter.com/intent/tweet?url=https://mapy1874.github.io/project/&amp;text=" target="_blank" rel="noopener" class="share-btn-twitter">
+        <a href="https://twitter.com/intent/tweet?url=https://mapy1874.github.io/post/lazy-evaluation/&amp;text=Lazy%20Evaluation" target="_blank" rel="noopener" class="share-btn-twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
@@ -660,7 +852,7 @@
       
       
       <li>
-        <a href="https://www.facebook.com/sharer.php?u=https://mapy1874.github.io/project/&amp;t=" target="_blank" rel="noopener" class="share-btn-facebook">
+        <a href="https://www.facebook.com/sharer.php?u=https://mapy1874.github.io/post/lazy-evaluation/&amp;t=Lazy%20Evaluation" target="_blank" rel="noopener" class="share-btn-facebook">
           <i class="fab fa-facebook"></i>
         </a>
       </li>
@@ -673,7 +865,7 @@
       
       
       <li>
-        <a href="mailto:?subject=&amp;body=https://mapy1874.github.io/project/" target="_blank" rel="noopener" class="share-btn-email">
+        <a href="mailto:?subject=Lazy%20Evaluation&amp;body=https://mapy1874.github.io/post/lazy-evaluation/" target="_blank" rel="noopener" class="share-btn-email">
           <i class="fas fa-envelope"></i>
         </a>
       </li>
@@ -686,7 +878,7 @@
       
       
       <li>
-        <a href="https://www.linkedin.com/shareArticle?url=https://mapy1874.github.io/project/&amp;title=" target="_blank" rel="noopener" class="share-btn-linkedin">
+        <a href="https://www.linkedin.com/shareArticle?url=https://mapy1874.github.io/post/lazy-evaluation/&amp;title=Lazy%20Evaluation" target="_blank" rel="noopener" class="share-btn-linkedin">
           <i class="fab fa-linkedin-in"></i>
         </a>
       </li>
@@ -699,7 +891,7 @@
       
       
       <li>
-        <a href="https://web.whatsapp.com/send?text=%20https://mapy1874.github.io/project/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+        <a href="https://web.whatsapp.com/send?text=Lazy%20Evaluation%20https://mapy1874.github.io/post/lazy-evaluation/" target="_blank" rel="noopener" class="share-btn-whatsapp">
           <i class="fab fa-whatsapp"></i>
         </a>
       </li>
@@ -712,7 +904,7 @@
       
       
       <li>
-        <a href="https://service.weibo.com/share/share.php?url=https://mapy1874.github.io/project/&amp;title=" target="_blank" rel="noopener" class="share-btn-weibo">
+        <a href="https://service.weibo.com/share/share.php?url=https://mapy1874.github.io/post/lazy-evaluation/&amp;title=Lazy%20Evaluation" target="_blank" rel="noopener" class="share-btn-weibo">
           <i class="fab fa-weibo"></i>
         </a>
       </li>
@@ -731,6 +923,30 @@
 
 
 
+  
+    
+    
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
 
 
 

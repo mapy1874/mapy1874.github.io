@@ -66,7 +66,7 @@ Boom! The reversed roadmap for transforming basic case into our goal worked! Her
 &lt;p&gt;Let $Y=X^n, g(a) = a^{\frac{m}{n}}$.&lt;/p&gt;
 &lt;p&gt;Since
 $$
-g&amp;rsquo;&#39;(a) = \frac{m}{n}.(\frac{m}{n}-1).a^{\frac{m}{n}-2} \ge 0 ~~\forall a \in [0, \infty),
+g&#39;&#39;(a) = \frac{m}{n}.(\frac{m}{n}-1).a^{\frac{m}{n}-2} \ge 0 ~~\forall a \in [0, \infty),
 $$
 $g(a)$ is convex on $[0,\infty)$.&lt;/p&gt;
 &lt;p&gt;By Jensen&amp;rsquo;s Inequality:
