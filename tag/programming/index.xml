@@ -1,136 +1,107 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Programming | Patrick Ma</title>
-    <link>https://mapy1874.github.io/tag/programming/</link>
-      <atom:link href="https://mapy1874.github.io/tag/programming/index.xml" rel="self" type="application/rss+xml" />
-    <description>Programming</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Tue, 23 Feb 2021 13:20:41 -0300</lastBuildDate>
-    <image>
-      <url>https://mapy1874.github.io/images/icon_huc150438b37d3fb5834aec482eaf638f2_3872_512x512_fill_lanczos_center_2.png</url>
-      <title>Programming</title>
-      <link>https://mapy1874.github.io/tag/programming/</link>
-    </image>
-    
-    <item>
-      <title>Lazy Evaluation</title>
-      <link>https://mapy1874.github.io/post/lazy-evaluation/</link>
-      <pubDate>Tue, 23 Feb 2021 13:20:41 -0300</pubDate>
-      <guid>https://mapy1874.github.io/post/lazy-evaluation/</guid>
-      <description>&lt;h2 id=&#34;whatwhy&#34;&gt;What&amp;amp;Why&lt;/h2&gt;
-&lt;p&gt;When you see the name &lt;em&gt;lazy evaluation&lt;/em&gt;, you might wonder what is its difference from evaluation, which means running the program according to the semantics of your language. Well, lazy evaluation is a great modification to a basic evaluator. It follows the principle of laziness: delaying evaluation of procedure arguments until the last possible moment. Consider the following example from 
-&lt;a href=&#34;https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-27.html#%25_sec_4.2&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;SICP&lt;/a&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-scheme&#34;&gt;(define (try a b)
-  (if (= a 0) 1 b))
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Using basic the evaluator in COMP524, &lt;code&gt;(try 0 (/ 1 0))&lt;/code&gt; will raise an error as the denominator cannot be 0. However, with lazy evaluation, there would be no error at all! Evaluating the example would return 1, as the argument &lt;code&gt;(/ 1 0)&lt;/code&gt; would never be evaluated: the evaluator promises &lt;code&gt;(/ 1 0)&lt;/code&gt; to be evaluated until it is actually used. We call languages with lazy evaluation as &lt;em&gt;normal-order&lt;/em&gt; languages. Also, we say a procedure is &lt;em&gt;non-strict&lt;/em&gt; in an argument if the argument is not evaluated before the body of the procedure.&lt;/p&gt;
-&lt;p&gt;Another example of lazy evaluation is short-circuit evaluation&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;false &amp;amp;&amp;amp; (true || false &amp;amp;&amp;amp; true)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;As we have the logical operator &lt;em&gt;and&lt;/em&gt; here, any part being evaluated to &lt;code&gt;false&lt;/code&gt; will lead to the whole expression being &lt;code&gt;false&lt;/code&gt;. Thus, lazy evaluation will only look at &lt;code&gt;false&lt;/code&gt; and skip &lt;code&gt;(true || false &amp;amp;&amp;amp; true)&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;From the above example, we can say that sometimes lazy evaluation can help reduce error, and we could save (perhaps loooong) evaluation time of an operand never needed in the body of a procedure. Popular languages like Python also integrate lots of lazy evaluation functionalities. We will see more pros and cons of lazy evaluation at the end of this post.&lt;/p&gt;
-&lt;h2 id=&#34;two-implementations-of-lazy-evaluation&#34;&gt;Two Implementations of Lazy Evaluation&lt;/h2&gt;
-&lt;p&gt;There are two implementations of lazy evaluation: &lt;em&gt;call-by-name&lt;/em&gt; and &lt;em&gt;call-by-need&lt;/em&gt;. Before we dive deeper into that, let&amp;rsquo;s introduce a new concept called &lt;em&gt;thunk&lt;/em&gt;. The idea is that, argument evaluation is going to be delayed when applying a procedure. The delayed arguments will be transformed into objects called &lt;em&gt;thunks&lt;/em&gt;, which contain necessary information to produce the value of the argument. That being said, a thunk must contain the argument expression and the environment when the procedure is being called. In other words, a thunk is a shell for a delayed expression. The following list can represent a thunk&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-scheme&#34;&gt;(list &#39;thunk exp env)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Thunk is an important object in implementing lazy evaluation. The process of forming a thunk is called &lt;em&gt;freezing&lt;/em&gt;, or &lt;em&gt;delay&lt;/em&gt;. The process of evaluating a thunk is called &lt;em&gt;thawing&lt;/em&gt;, or &lt;em&gt;forcing&lt;/em&gt;. When we want to evaluate thunks, we can memoize the value of the argument, or evaluate the same thunk again in the future. This leads two different implementations of lazy evaluation, defined 
-&lt;a href=&#34;https://academic.udayton.edu/saverioperugini/courses/cps343/lecture_notes/lazyevaluation.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt; as follows:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;em&gt;call-by-name&lt;/em&gt;: invokes thunk every time parameter is referenced; disadvantage: it is a waste of time when side-effects are not possible because the same value is returned each time&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;call-by-need&lt;/em&gt;: records the value of each thunk the first time it is called, and thereafter refers to the saved value rather than re-invoking the thunk; this is an example of a more general technique called &lt;em&gt;memoization&lt;/em&gt;, which is also used in &lt;em&gt;dynamic programming&lt;/em&gt; (take COMP 550)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;In other words, call-by-name is non-memoized lazy evaluation, while call-by-need is memoized lazy evaluation.&lt;/p&gt;
-&lt;h2 id=&#34;useful-scenarios&#34;&gt;Useful scenarios&lt;/h2&gt;
-&lt;h4 id=&#34;stream-object&#34;&gt;Stream Object&lt;/h4&gt;
-&lt;p&gt;With call-by-need, we could implement a stream abstraction. A stream object is a pair-like object, except the cdr part is not evaluated until needed. Thus, the data structure may be infinite!&lt;/p&gt;
-&lt;center&gt;
-  &lt;img src=&#34;stream_object.png&#34;&gt;
-  &lt;figcaption&gt;A stream object (from &lt;a href=&#34;https://www.youtube.com/watch?v=vAxgBQ0sA00&amp;list=PL7BcsI5ueSNFPCEisbaoQ0kXIDX9rR5FF&amp;index=19&amp;ab_channel=LeonByford&#34;&gt;here&lt;/a&gt;)&lt;/figcaption&gt;
-&lt;/center&gt;
-&lt;p&gt;Suppose we want to find the first 100 prime numbers between 1 to 100000000, without stream object, the procedure will look like&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-scheme&#34;&gt;(list-ref 
- 	(filter (lambda (x) (prime? x))
-          (enumerate-interval 1 100000000))
- 	100)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This can be costly as we need to generate the entire list of integers from 1 to 100000000 before proceeding. Stream object can save us from generating a huge list. First, we define two helper procedures in generating stream objects as a list and selecting elements we want in the stream.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-scheme&#34;&gt;;; generate a stream list, which is lazy
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Programming | Patrick Ma</title><link>https://mapy1874.github.io/tag/programming/</link><atom:link href="https://mapy1874.github.io/tag/programming/index.xml" rel="self" type="application/rss+xml"/><description>Programming</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Tue, 23 Feb 2021 13:20:41 -0300</lastBuildDate><image><url>https://mapy1874.github.io/images/icon_huc150438b37d3fb5834aec482eaf638f2_3872_512x512_fill_lanczos_center_2.png</url><title>Programming</title><link>https://mapy1874.github.io/tag/programming/</link></image><item><title>Lazy Evaluation</title><link>https://mapy1874.github.io/post/lazy-evaluation/</link><pubDate>Tue, 23 Feb 2021 13:20:41 -0300</pubDate><guid>https://mapy1874.github.io/post/lazy-evaluation/</guid><description>&lt;h2 id="whatwhy">What&amp;amp;Why&lt;/h2>
+&lt;p>When you see the name &lt;em>lazy evaluation&lt;/em>, you might wonder what is its difference from evaluation, which means running the program according to the semantics of your language. Well, lazy evaluation is a great modification to a basic evaluator. It follows the principle of laziness: delaying evaluation of procedure arguments until the last possible moment. Consider the following example from
+&lt;a href="https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-27.html#%25_sec_4.2" target="_blank" rel="noopener">SICP&lt;/a>&lt;/p>
+&lt;pre>&lt;code class="language-scheme">(define (try a b)
+(if (= a 0) 1 b))
+&lt;/code>&lt;/pre>
+&lt;p>Using basic the evaluator in COMP524, &lt;code>(try 0 (/ 1 0))&lt;/code> will raise an error as the denominator cannot be 0. However, with lazy evaluation, there would be no error at all! Evaluating the example would return 1, as the argument &lt;code>(/ 1 0)&lt;/code> would never be evaluated: the evaluator promises &lt;code>(/ 1 0)&lt;/code> to be evaluated until it is actually used. We call languages with lazy evaluation as &lt;em>normal-order&lt;/em> languages. Also, we say a procedure is &lt;em>non-strict&lt;/em> in an argument if the argument is not evaluated before the body of the procedure.&lt;/p>
+&lt;p>Another example of lazy evaluation is short-circuit evaluation&lt;/p>
+&lt;pre>&lt;code class="language-java">false &amp;amp;&amp;amp; (true || false &amp;amp;&amp;amp; true)
+&lt;/code>&lt;/pre>
+&lt;p>As we have the logical operator &lt;em>and&lt;/em> here, any part being evaluated to &lt;code>false&lt;/code> will lead to the whole expression being &lt;code>false&lt;/code>. Thus, lazy evaluation will only look at &lt;code>false&lt;/code> and skip &lt;code>(true || false &amp;amp;&amp;amp; true)&lt;/code>.&lt;/p>
+&lt;p>From the above example, we can say that sometimes lazy evaluation can help reduce error, and we could save (perhaps loooong) evaluation time of an operand never needed in the body of a procedure. Popular languages like Python also integrate lots of lazy evaluation functionalities. We will see more pros and cons of lazy evaluation at the end of this post.&lt;/p>
+&lt;h2 id="two-implementations-of-lazy-evaluation">Two Implementations of Lazy Evaluation&lt;/h2>
+&lt;p>There are two implementations of lazy evaluation: &lt;em>call-by-name&lt;/em> and &lt;em>call-by-need&lt;/em>. Before we dive deeper into that, let&amp;rsquo;s introduce a new concept called &lt;em>thunk&lt;/em>. The idea is that, argument evaluation is going to be delayed when applying a procedure. The delayed arguments will be transformed into objects called &lt;em>thunks&lt;/em>, which contain necessary information to produce the value of the argument. That being said, a thunk must contain the argument expression and the environment when the procedure is being called. In other words, a thunk is a shell for a delayed expression. The following list can represent a thunk&lt;/p>
+&lt;pre>&lt;code class="language-scheme">(list 'thunk exp env)
+&lt;/code>&lt;/pre>
+&lt;p>Thunk is an important object in implementing lazy evaluation. The process of forming a thunk is called &lt;em>freezing&lt;/em>, or &lt;em>delay&lt;/em>. The process of evaluating a thunk is called &lt;em>thawing&lt;/em>, or &lt;em>forcing&lt;/em>. When we want to evaluate thunks, we can memoize the value of the argument, or evaluate the same thunk again in the future. This leads two different implementations of lazy evaluation, defined
+&lt;a href="https://academic.udayton.edu/saverioperugini/courses/cps343/lecture_notes/lazyevaluation.html" target="_blank" rel="noopener">here&lt;/a> as follows:&lt;/p>
+&lt;ul>
+&lt;li>&lt;em>call-by-name&lt;/em>: invokes thunk every time parameter is referenced; disadvantage: it is a waste of time when side-effects are not possible because the same value is returned each time&lt;/li>
+&lt;li>&lt;em>call-by-need&lt;/em>: records the value of each thunk the first time it is called, and thereafter refers to the saved value rather than re-invoking the thunk; this is an example of a more general technique called &lt;em>memoization&lt;/em>, which is also used in &lt;em>dynamic programming&lt;/em> (take COMP 550)&lt;/li>
+&lt;/ul>
+&lt;p>In other words, call-by-name is non-memoized lazy evaluation, while call-by-need is memoized lazy evaluation.&lt;/p>
+&lt;h2 id="useful-scenarios">Useful scenarios&lt;/h2>
+&lt;h4 id="stream-object">Stream Object&lt;/h4>
+&lt;p>With call-by-need, we could implement a stream abstraction. A stream object is a pair-like object, except the cdr part is not evaluated until needed. Thus, the data structure may be infinite!&lt;/p>
+&lt;center>
+&lt;img src="stream_object.png">
+&lt;figcaption>A stream object (from &lt;a href="https://www.youtube.com/watch?v=vAxgBQ0sA00&amp;list=PL7BcsI5ueSNFPCEisbaoQ0kXIDX9rR5FF&amp;index=19&amp;ab_channel=LeonByford">here&lt;/a>)&lt;/figcaption>
+&lt;/center>
+&lt;p>Suppose we want to find the first 100 prime numbers between 1 to 100000000, without stream object, the procedure will look like&lt;/p>
+&lt;pre>&lt;code class="language-scheme">(list-ref
+(filter (lambda (x) (prime? x))
+(enumerate-interval 1 100000000))
+100)
+&lt;/code>&lt;/pre>
+&lt;p>This can be costly as we need to generate the entire list of integers from 1 to 100000000 before proceeding. Stream object can save us from generating a huge list. First, we define two helper procedures in generating stream objects as a list and selecting elements we want in the stream.&lt;/p>
+&lt;pre>&lt;code class="language-scheme">;; generate a stream list, which is lazy
 (define (stream-interval a b)
-  (if (&amp;gt; a b)
-      the-empty-stream
-      (cons-stream a (stream-interval (+ a 1) b))))
-
+(if (&amp;gt; a b)
+the-empty-stream
+(cons-stream a (stream-interval (+ a 1) b))))
 ;; filter out elements satify the predicate in stream
 (define (stream-filter predicate str)
-  (if (predicate (stream-car str))	
-      ;; 1st elt of stream satisfies predicate. e.g., elt is a prime num
-      (cons-stream (stream-car str)
-                   (stream-filter predicate 
-                                  (stream-cdr str)))
-      (stream-filter predicate (stream-cdr str))))
-
-;; stream-car, stream-cdr, cons-stream are procedures 
+(if (predicate (stream-car str))
+;; 1st elt of stream satisfies predicate. e.g., elt is a prime num
+(cons-stream (stream-car str)
+(stream-filter predicate
+(stream-cdr str)))
+(stream-filter predicate (stream-cdr str))))
+;; stream-car, stream-cdr, cons-stream are procedures
 ;; implementing lazy evaluation for the stream object
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Then we have the improved version of &lt;code&gt;list-ref&lt;/code&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-scheme&#34;&gt;(stream-ref 
- 	(stream-filter (lambda (x) (prime? x))
-                 (stream-interval 1 100000000))
- 	100)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;stream-interval&lt;/code&gt; promises to generate the numbers between 1 to 10000000, but once the first value is generated, it is immediately passed to &lt;code&gt;stream-filter&lt;/code&gt;.  Then &lt;code&gt;stream-filter&lt;/code&gt; will ask for the next element in the stream. The program will now go back to &lt;code&gt;stream-interval&lt;/code&gt; for the second number, etc. As a consequence, we just need to find the first 100 prime numbers and exit the procedure using &lt;code&gt;stream-ref&lt;/code&gt; now!&lt;/p&gt;
-&lt;h4 id=&#34;yield-in-python&#34;&gt;&lt;code&gt;yield&lt;/code&gt; in Python&lt;/h4&gt;
-&lt;p&gt;Here is another similar example in Python.&lt;/p&gt;
-&lt;p&gt;We are used to writing code like &lt;code&gt;createIterable&lt;/code&gt;. This can be troublesome when the list size is so large that the performance of programs may be compromised.  The keyword &lt;code&gt;yield&lt;/code&gt; can solve this by following the principle of laziness. &lt;code&gt;createGenerator&lt;/code&gt; will not return an actual element until it is forced to &amp;ldquo;yield&amp;rdquo; one. In other words, &lt;strong&gt;when you call the function, the code you have written in the function body does not run.&lt;/strong&gt; Thus, &lt;code&gt;createGenerator&lt;/code&gt; processes &lt;code&gt;i=0&lt;/code&gt;, and takes a break until the next element in the generator is asked. Because of its laziness, what  &lt;code&gt;yield&lt;/code&gt;  returns can only be used once, while an iterable list can be iterated multiple times.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-Python&#34;&gt;# return a list as a whole
+&lt;/code>&lt;/pre>
+&lt;p>Then we have the improved version of &lt;code>list-ref&lt;/code>&lt;/p>
+&lt;pre>&lt;code class="language-scheme">(stream-ref
+(stream-filter (lambda (x) (prime? x))
+(stream-interval 1 100000000))
+100)
+&lt;/code>&lt;/pre>
+&lt;p>&lt;code>stream-interval&lt;/code> promises to generate the numbers between 1 to 10000000, but once the first value is generated, it is immediately passed to &lt;code>stream-filter&lt;/code>. Then &lt;code>stream-filter&lt;/code> will ask for the next element in the stream. The program will now go back to &lt;code>stream-interval&lt;/code> for the second number, etc. As a consequence, we just need to find the first 100 prime numbers and exit the procedure using &lt;code>stream-ref&lt;/code> now!&lt;/p>
+&lt;h4 id="yield-in-python">&lt;code>yield&lt;/code> in Python&lt;/h4>
+&lt;p>Here is another similar example in Python.&lt;/p>
+&lt;p>We are used to writing code like &lt;code>createIterable&lt;/code>. This can be troublesome when the list size is so large that the performance of programs may be compromised. The keyword &lt;code>yield&lt;/code> can solve this by following the principle of laziness. &lt;code>createGenerator&lt;/code> will not return an actual element until it is forced to &amp;ldquo;yield&amp;rdquo; one. In other words, &lt;strong>when you call the function, the code you have written in the function body does not run.&lt;/strong> Thus, &lt;code>createGenerator&lt;/code> processes &lt;code>i=0&lt;/code>, and takes a break until the next element in the generator is asked. Because of its laziness, what &lt;code>yield&lt;/code> returns can only be used once, while an iterable list can be iterated multiple times.&lt;/p>
+&lt;pre>&lt;code class="language-Python"># return a list as a whole
 def createIterable():
-	mylist = []
-	for i in range(3):
-		mylist.append(i*i)
-	return mylist
-
+mylist = []
+for i in range(3):
+mylist.append(i*i)
+return mylist
 for i in createIterable():
-	print(i)	# print 0, 1, 4
-  
+print(i) # print 0, 1, 4
 # yield elements one by one
 def createGenerator():
-	mylist = range(3)
-	for i in mylist:
-		yield i*i
-
+mylist = range(3)
+for i in mylist:
+yield i*i
 for i in createGenerator():
-	print(i)	# print 0, 1, 4
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;more-about-lazy-evaluation&#34;&gt;More about Lazy Evaluation&lt;/h2&gt;
-&lt;p&gt;Pros (based on Dr. Perugini&amp;rsquo;s 
-&lt;a href=&#34;https://academic.udayton.edu/saverioperugini/courses/cps343/lecture_notes/lazyevaluation.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;PL course&lt;/a&gt;)&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;saves the work required to evaluate an unused argument and sometimes prevent an error&lt;/li&gt;
-&lt;li&gt;leads to a uniform language; no need for special syntactic forms (e.g., &lt;code&gt;if&lt;/code&gt;)&lt;/li&gt;
-&lt;li&gt;language can be extended by programmers in standard ways&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Cons (based on Dr. Perugini&amp;rsquo;s 
-&lt;a href=&#34;https://academic.udayton.edu/saverioperugini/courses/cps343/lecture_notes/lazyevaluation.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;PL course&lt;/a&gt;)&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;call-by-name can be inefficient if an argument is used more than once in the body (so use call-by-need version then)&lt;/li&gt;
-&lt;li&gt;call-by-need makes a program difficult to understand in the presence of side-effects&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Other applications of lazy evaluation (based on Dr. Perugini&amp;rsquo;s 
-&lt;a href=&#34;https://academic.udayton.edu/saverioperugini/courses/cps343/lecture_notes/lazyevaluation.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;PL course&lt;/a&gt;)&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;em&gt;same-fringe&lt;/em&gt; problem&lt;/li&gt;
-&lt;li&gt;combinatorial search (e.g., a tree) in AI&lt;/li&gt;
-&lt;li&gt;lends itself to straightforward implementation of important recursive algorithms (e.g. quicksort)&lt;/li&gt;
-&lt;li&gt;overall, streams and filters are used in concert in a &lt;em&gt;genertor-filter&lt;/em&gt; style of programming&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Other Laziness in Computer Science&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Caching: keeping copies of data around&lt;/li&gt;
-&lt;li&gt;DevOps: automating the deployment and maintenance cycle&lt;/li&gt;
-&lt;li&gt;Documentation: writing great documentation about your code so that others won’t bother you&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-  </channel>
-</rss>
+print(i) # print 0, 1, 4
+&lt;/code>&lt;/pre>
+&lt;h2 id="more-about-lazy-evaluation">More about Lazy Evaluation&lt;/h2>
+&lt;p>Pros (based on Dr. Perugini&amp;rsquo;s
+&lt;a href="https://academic.udayton.edu/saverioperugini/courses/cps343/lecture_notes/lazyevaluation.html" target="_blank" rel="noopener">PL course&lt;/a>)&lt;/p>
+&lt;ul>
+&lt;li>saves the work required to evaluate an unused argument and sometimes prevent an error&lt;/li>
+&lt;li>leads to a uniform language; no need for special syntactic forms (e.g., &lt;code>if&lt;/code>)&lt;/li>
+&lt;li>language can be extended by programmers in standard ways&lt;/li>
+&lt;/ul>
+&lt;p>Cons (based on Dr. Perugini&amp;rsquo;s
+&lt;a href="https://academic.udayton.edu/saverioperugini/courses/cps343/lecture_notes/lazyevaluation.html" target="_blank" rel="noopener">PL course&lt;/a>)&lt;/p>
+&lt;ul>
+&lt;li>call-by-name can be inefficient if an argument is used more than once in the body (so use call-by-need version then)&lt;/li>
+&lt;li>call-by-need makes a program difficult to understand in the presence of side-effects&lt;/li>
+&lt;/ul>
+&lt;p>Other applications of lazy evaluation (based on Dr. Perugini&amp;rsquo;s
+&lt;a href="https://academic.udayton.edu/saverioperugini/courses/cps343/lecture_notes/lazyevaluation.html" target="_blank" rel="noopener">PL course&lt;/a>)&lt;/p>
+&lt;ul>
+&lt;li>&lt;em>same-fringe&lt;/em> problem&lt;/li>
+&lt;li>combinatorial search (e.g., a tree) in AI&lt;/li>
+&lt;li>lends itself to straightforward implementation of important recursive algorithms (e.g. quicksort)&lt;/li>
+&lt;li>overall, streams and filters are used in concert in a &lt;em>genertor-filter&lt;/em> style of programming&lt;/li>
+&lt;/ul>
+&lt;p>Other Laziness in Computer Science&lt;/p>
+&lt;ul>
+&lt;li>Caching: keeping copies of data around&lt;/li>
+&lt;li>DevOps: automating the deployment and maintenance cycle&lt;/li>
+&lt;li>Documentation: writing great documentation about your code so that others won’t bother you&lt;/li>
+&lt;/ul></description></item></channel></rss>
